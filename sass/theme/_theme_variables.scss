@@ -1,0 +1,77 @@
+// Use this file to overwrite the basic Bootstrap variables and add your own variables
+// To overwrite a Bootstrap variable you don´t have to touch the Bootstrap folder.
+// Just copy a variable from src/sass/bootstrap4/_variables.scss, paste it here and edit the value.
+$primary: #00b5ff; // Thats a sample how you could change a BootStrap variable.
+$dark: #15171b;
+$dark-blue: #0b0d15;
+$admin-color: #092f26;
+$admin-text-color: #00fff3;
+$pc: #111111;
+
+::-webkit-scrollbar {
+width: 5px;
+height: 7px;
+}
+::-webkit-scrollbar-button {
+width: 0px;
+height: 0px;
+}
+::-webkit-scrollbar-thumb {
+background: #525965;
+border: 0px none #ffffff;
+border-radius: 0px;
+}
+::-webkit-scrollbar-thumb:hover {
+background: #525965;
+}
+::-webkit-scrollbar-thumb:active {
+background: #525965;
+}
+::-webkit-scrollbar-track {
+background: transparent;
+border: 0px none #ffffff;
+border-radius: 50px;
+}
+::-webkit-scrollbar-track:hover {
+background: transparent;
+}
+::-webkit-scrollbar-track:active {
+background: transparent;
+}
+::-webkit-scrollbar-corner {
+background: transparent;
+}
+
+
+
+.badge-BOT{
+    @extend .badge-success;
+}
+
+.badge-ADMIN{
+    //@extend .badge-danger;
+    background: $admin-color;
+    color: $admin-text-color;
+}
+
+.badge-MOD{
+    @extend .badge-info;
+}
+
+.badge-MEMBER{
+    @extend .badge-light;
+    color: #000000;
+}
+
+.badge-NEWBIE{
+    @extend .badge-light;
+    color: #000000;
+}
+
+.badge-level{
+    background: rgba(#f7f7f7,0.1);
+    @extend .text-white;
+}
+
+
+//Bootstrap
