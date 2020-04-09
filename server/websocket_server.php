@@ -28,9 +28,12 @@ class Chat implements MessageComponentInterface {
 		// unset($this->users[$conn->resourceId]);
 	}
 
+
+	
 	public function onMessage(ConnectionInterface $from,  $data) {
 
 		global $conn;
+		global $base_url;
 
 		
 		$from_id = $from->resourceId;
@@ -47,22 +50,33 @@ class Chat implements MessageComponentInterface {
 				$user_id = $getUserdata['userid'];
 				$userName = $getUserdata['username'];
 				$role = $getUserdata['role'];
+				$img_url = $getUserdata['img_url'];
 				//$onlineStatus = $getUserdata['online_status'];
 				//$banStatus = $getUserdata['ban_status'];
 				//$by = $getUserdata['action_by];
 				$chat_msg = $data->chat_msg;
+
+				if($img_url != ''){
+					$img_url = $base_url."uploads/".$img_url;
+				} else {
+					$img_url = "images/default-person.png";
+				}
+
 				$response_from =
 
 					"<div class='chat-entry card p-1 m-1 bg-primary'>
 					<div class='row'>
 						<div class='col-md-12'>
 							<div class='d-flex'>
-
 								<div class='c-left mr-2'>
-									<img src='http://placehold.it/55x55'><br>
-									<span class='mt-1 d-block badge badge-". $role . "'>" . $role . "</span>
+									<div class='dp-wrapper'>
+										<a href='#' data-toggle='modal' data-target='" . $userName . "'>
+											<img class='rounded' src='" . $img_url . "'>
+										</a>
+									</div>
+									<span class='mt-1 d-block badge badge-" . $role . "'>" . $role . "</span>
 								</div>
-				
+												
 								<div class='c-right'>
 									<a href='#' class='text-white font-weight-bold'  id='us' onclick='changeValue(this)'>" . $userName . "</a><br>" . $chat_msg . "
 								</div>
@@ -80,12 +94,16 @@ class Chat implements MessageComponentInterface {
 						<div class='col-md-12'>
 							<div class='d-flex'>
 								<div class='c-left mr-2'>
-									<img src='http://placehold.it/55x55'><br>
-									<span class='mt-1 d-block badge badge-". $role . "'>" . $role . "</span>
+									<div class='dp-wrapper'>
+										<a href='#' data-toggle='modal' data-target='" . $userName . "'>
+											<img class='rounded' src='" . $img_url . "'>
+										</a>
+									</div>
+									<span class='mt-1 d-block badge badge-" . $role . "'>" . $role . "</span>
 								</div>
-						
+												
 								<div class='c-right'>
-									<a href='#' class='text-white font-weight-bold'  id='us' onclick='changeValue(this)'>".$userName."</a><br>".$chat_msg."
+									<a href='#' class='text-white font-weight-bold'  id='us' onclick='changeValue(this)'>" . $userName . "</a><br>" . $chat_msg . "
 								</div>
 							</div>
 						</div>

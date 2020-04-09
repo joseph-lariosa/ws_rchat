@@ -9,9 +9,9 @@ $userRole = $_SESSION['userName'];
 include('template/header.php');
 ?>
 
-<script src="js/jquery-chat.js?<?php echo rand();?>"></script>
-<script src="js/emoji.js?<?php echo rand();?>"></script>
-<script src="js/slideout.js?<?php echo rand();?>"></script>
+<script src="js/jquery-chat.js?<?php echo rand(); ?>"></script>
+<script src="js/emoji.js?<?php echo rand(); ?>"></script>
+<script src="js/slideout.js?<?php echo rand(); ?>"></script>
 
 <div class="page-wrapper chiller-theme toggled">
 
@@ -72,8 +72,12 @@ include('template/header.php');
 							<div class="d-flex">
 
 								<div class="c-left mr-2">
-									<img class="d-block" src="/uploads/<?php echo $row['user_dp'];?>" width="55px">
-									<span class="mt-1 d-block badge badge-<?php echo $row['role'];?>"><?php echo $row['role'];?></span>
+									<div class="dp-wrapper">
+										<a href="#" data-toggle="modal" data-target="#<?php echo $row["username"]; ?>">
+											<img class="rounded" src="<?php if ($row['img_url'] != '') { echo "uploads/" . $row['img_url'] . ""; } else {echo "images/default-person.png";} ?>">
+										</a>
+									</div>
+									<span class="mt-1 d-block badge badge-<?php echo $row['role']; ?>"><?php echo $row['role']; ?></span>
 								</div>
 
 
@@ -115,6 +119,13 @@ include('template/header.php');
 
 <nav id="sidebar-right" class="sidebar-right-wrapper">
 
+	<div class="sidebar-right-content">
+
+
+		<div id="widget-right"></div>
+
+	</div>
+	<!--sidebar-wrapper-->
 
 
 </nav>
@@ -126,68 +137,74 @@ include('template/header.php');
 <script>
 	jQuery(function($) {
 
+		// Websocket
+		var websocket_server = new WebSocket("ws://localhost:8080/");
+
+		websocket_server.onopen = function(e) {
+			$('#widget-right').load('chat/widget-right.php');
+			console.log("Connection established!");
+			websocket_server.send(
+				JSON.stringify({
+					'type': 'socket',
+					'user_id': <?php echo $userID; ?>,
+					'user_name': "<?php echo $userName; ?>"
+				})
+			);
+		};
+
+		websocket_server.onclose = function(e) {
+			$('#widget-right').load('chat/widget-right.php');
+			console.log("User Disconnected");
+		};
+
+		websocket_server.onerror = function(e) {
+			// Errorhandling
+		}
+		websocket_server.onmessage = function(e) {
+			$('#widget-right').load('chat/widget-right.php');
+			var json = JSON.parse(e.data);
+			console.log(e.data);
+			switch (json.type) {
+				case 'chat':
+					$('#chat_output').append(json.msg);
+					autoScrolling();
+					break;
+			}
+		}
 
 
-// Websocket
-var websocket_server = new WebSocket("ws://localhost:8080/");
+		$('#send_msg').on('click', function() {
+			if ($('#chat_input').val() == "") {
+				alert('Please write message first');
+				event.preventDefault();
 
-websocket_server.onopen = function(e) {
-	console.log("Connection established!");
-	websocket_server.send(
-		JSON.stringify({
-			'type': 'socket',
-			'user_id': <?php echo $userID; ?>,
-			'user_name': "<?php echo $userName; ?>"
-		})
-	);
-};
-websocket_server.onerror = function(e) {
-	// Errorhandling
-}
-websocket_server.onmessage = function(e) {
-	var json = JSON.parse(e.data);
-	console.log(e.data);
-	switch (json.type) {
-		case 'chat':
-			$('#chat_output').append(json.msg);
-			autoScrolling();
-			break;
-	}
-}
-
-
-$('#send_msg').on('click', function() {
-	if ($('#chat_input').val() == "") {
-		alert('Please write message first');
-		event.preventDefault();
-
-	} else {
-		event.preventDefault();
-		var chat_msg = $('#chat_input').val();
-		var room_id = $('#room_id').val();
-		websocket_server.send(
-			JSON.stringify({
-				'type': 'chat',
-				'user_id': <?php echo $userID; ?>,
-				'user_name': "<?php echo $userName; ?>",
-				'chat_msg': chat_msg
-			})
-		);
-		$.ajax({
-			type: "POST",
-			url: "chat/send_message.php",
-			data: {
-				msg: chat_msg,
-				id: room_id,
-			},
-			success: function() {
-				autoScrolling_msg();
+			} else {
+				event.preventDefault();
+				var chat_msg = $('#chat_input').val();
+				var room_id = $('#room_id').val();
+				websocket_server.send(
+					JSON.stringify({
+						'type': 'chat',
+						'user_id': <?php echo $userID; ?>,
+						'user_name': "<?php echo $userName; ?>",
+						'chat_msg': chat_msg
+					})
+				);
+				$.ajax({
+					type: "POST",
+					url: "chat/send_message.php",
+					data: {
+						msg: chat_msg,
+						id: room_id,
+					},
+					success: function() {
+						autoScrolling_msg();
+					}
+				});
+				$("input[type='text']").val('');
 			}
 		});
-		$("input[type='text']").val('');
-	}
-});
-});
+	});
 </script>
 
 <?php include('template/footer.php'); ?>
