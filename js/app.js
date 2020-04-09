@@ -1,4 +1,10 @@
 
+
+function changeValue(o){
+    document.getElementById('chat_input').value="@" + o.innerHTML + " ";
+}
+
+
 function autoScrolling() {
     $(".scroll_lock").animate({
         scrollTop: $(".scroll_lock")[0].scrollHeight

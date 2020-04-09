@@ -54,7 +54,7 @@ include('template/header.php');
 		</nav>
 
 
-		<div id="chat_output" class="scroll_lock default_scroll">
+		<div id="chat_output" class="scroll_lock default_scroll text-white">
 
 			<?php $query = mysqli_query($conn, "SELECT * FROM chat LEFT JOIN `users` ON users.userid=chat.userid WHERE chat_room_id='1' ORDER BY chat_date DESC LIMIT 40 ") or die(mysqli_error());
 			while ($row = mysqli_fetch_array($query)) {
@@ -68,10 +68,14 @@ include('template/header.php');
 								<div class="time-stamp-h">
 									<i class="fa fa-clock-o" title="<?php echo date("l,h:m A", strtotime($row['chat_date'])); ?>"></i>
 								</div>
-
-
 							</div>
 							<div class="d-flex">
+
+								<div class="c-left mr-2">
+									<img class="d-block" src="/uploads/<?php echo $row['user_dp'];?>" width="55px">
+									<span class="mt-1 d-block badge badge-<?php echo $row['role'];?>"><?php echo $row['role'];?></span>
+								</div>
+
 
 								<div class="c-right">
 									<a href="#" class="text-white font-weight-bold" id="us" onclick="changeValue(this)"><?php echo $row['username']; ?></a><br><?php echo $row['chat_msg']; ?>
