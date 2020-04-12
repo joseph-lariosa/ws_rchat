@@ -6,6 +6,10 @@ $userID = $_SESSION['userID'];
 $userName = $_SESSION['userName'];
 $userRole = $_SESSION['userName'];
 
+   if (!isset($_SESSION) || !isset($_SESSION['userName'])) {
+         header("Location: login.php");
+   }
+
 include('template/header.php');
 ?>
 

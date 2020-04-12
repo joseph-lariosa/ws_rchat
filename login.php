@@ -1,6 +1,11 @@
 <?php session_start();?>
+<?php include('template/header.php');?>
+
+
+<div class="container" id="login-wrapper">
+
     
-    <div class="mx-auto">
+<div class="mx-auto col-lg-4">
         <div class="card p-3">
             <?php 
             if (isset($_SESSION['message']) ){
@@ -21,15 +26,18 @@
             <div class="form-group">
             <input class="form-control" placeholder="password" type="password" name="password">
             </div>
-            <div class="d-flex justify-content-center">
-                <div class="input-login">
-                    <input class="btn btn-primary" type="submit" name="login" value="Login">
-                </div>
-                <div class="signup-now">
-                    &nbsp;or&nbsp;<a href="signup.php" class="btn btn-success">Create an Account</a>
-                </div>
+                <div class="input-login w-100 text-center">
+                    <input class="btn btn-primary w-100" type="submit" name="login" value="Login">
+                    <div class="link-block mt-2">
+                     Need an account? <a href="signup.php" class="text-dark font-weight-bold">Register here.</a><br>Lost Password
+                    </div>
+                
                 </div>
             </form>
         </div>
     </div>
 
+</div>
+
+
+    <?php include('template/footer.php');?>
