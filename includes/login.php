@@ -20,16 +20,17 @@ if(isset($_POST['login'])) {
         $dbrole = $row['role'];
     }
 
+
     if($username !== $dbusername && $password !== $dbpassword){
         $_SESSION['message']="Either the username or password is incorrect. Please Try Again";
-        header('location:/rchat/login.php');
+        header('location:/login.php');
 
     }else{
         $_SESSION['userID']=$dbuserid;
         $_SESSION['userName']=$dbusername;
         $_SESSION['loggedIn']="TRUE";
         $_SESSION['userRole']=$dbrole;
-        header('location:/rchat/index.php');
+        header('location:/index.php');
     }
 
 }

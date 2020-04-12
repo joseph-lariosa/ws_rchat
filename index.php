@@ -48,9 +48,9 @@ include('template/header.php');
 				<ul class="nav navbar-nav mr-0 chat-nav-icons">
 					<?php
 					if (isset($_SESSION['loggedIn']) && $_SESSION['loggedIn'] == true) {
-						echo "<li class='nav-item'><a class='nav-link' href='" . $base_url . "/logout.php'><i class='fa fa-sign-out'></i></a></li>";
+						echo "<li class='nav-item'><a class='nav-link' href='/logout.php'><i class='fa fa-sign-out'></i></a></li>";
 					} else {
-						echo "<li class='nav-item'><a class='nav-link' href='" . $base_url . "/login.php'><i class='fa fa-sign-in'></i></a></li>";
+						echo "<li class='nav-item'><a class='nav-link' href='/login.php'><i class='fa fa-sign-in'></i></a></li>";
 					}
 					?>
 				</ul>
@@ -142,7 +142,7 @@ include('template/header.php');
 	jQuery(function($) {
 
 		// Websocket
-		var websocket_server = new WebSocket("ws://localhost:8080/");
+		var websocket_server = new WebSocket("ws://rchat.test:8080/");
 
 		websocket_server.onopen = function(e) {
 			$('#widget-right').load('chat/widget-right.php');

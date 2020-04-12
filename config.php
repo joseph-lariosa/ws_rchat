@@ -4,7 +4,7 @@ $db['host'] = "localhost";
 $db['username'] = "root";
 $db['password'] = "";
 $db['database'] = "rchat";
-$base_url= 'http://localhost/rchat/';
+$base_url= 'rchat.test';
 $sitename= 'StreamChat';
 
 

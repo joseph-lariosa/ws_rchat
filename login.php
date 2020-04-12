@@ -29,7 +29,7 @@
                 <div class="input-login w-100 text-center">
                     <input class="btn btn-primary w-100" type="submit" name="login" value="Login">
                     <div class="link-block mt-2">
-                     Need an account? <a href="signup.php" class="text-dark font-weight-bold">Register here.</a><br>Lost Password
+                     Need an account? <a href="signup.php" class="font-weight-bold">Register here.</a>
                     </div>
                 
                 </div>
