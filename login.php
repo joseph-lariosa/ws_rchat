@@ -19,7 +19,7 @@
                 echo "<div class='alert alert-success'>Registration Successful! Please login here </div>";
                 }
             ?>
-            <form method="POST" action="includes/login.php" class="form">
+            <form method="POST" onSubmit="return validateForm();" action="includes/login.php" class="form">
             <div class="form-group">
             <input class="form-control" placeholder="Username" type="text" name="username">
             </div>
@@ -38,6 +38,8 @@
     </div>
 
 </div>
+
+
 
 
     <?php include('template/footer.php');?>

@@ -17,6 +17,9 @@ include('template/header.php');
 <script src="js/emoji.js?<?php echo rand(); ?>"></script>
 <script src="js/slideout.js?<?php echo rand(); ?>"></script>
 
+
+
+
 <div class="page-wrapper chiller-theme toggled">
 
 	<nav id="sidebar" class="sidebar-wrapper">
@@ -58,7 +61,7 @@ include('template/header.php');
 		</nav>
 
 
-		<div id="chat_output" class="scroll_lock default_scroll text-white d-flex flex-column-reverse"></div>
+		<div id="chat_output" class="default_scroll text-white d-flex flex-column-reverse"></div>
 
 
 		<form id="chatbox" class="forms pl-1 pr-1 mt-1 form-lg">
@@ -102,4 +105,13 @@ include('template/header.php');
 </div>
 <!-- page-wrapper -->
 
+<?php
+ob_start();
+require('./chat/welcome.php');
+$data = ob_get_clean();
+?>
+
+
+
+<script src="js/chat.js"></script>
 <?php include('template/footer.php'); ?>

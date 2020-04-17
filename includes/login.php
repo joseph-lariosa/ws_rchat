@@ -26,12 +26,40 @@ if(isset($_POST['login'])) {
         header('location:/login.php');
 
     }else{
+        mysqli_query($conn,"UPDATE users SET login_status=1 WHERE username='$username'");
+ 
         $_SESSION['userID']=$dbuserid;
         $_SESSION['userName']=$dbusername;
         $_SESSION['loggedIn']="TRUE";
         $_SESSION['userRole']=$dbrole;
+
         header('location:/index.php');
     }
 
 }
 ?>
+
+
+
+<script>
+    	jQuery(function($) {
+		// Websocket
+		var websocket_server = new WebSocket("ws://rchat.test:8080/");
+
+		websocket_server.onopen = function(e) {
+		
+
+			var user_name = $('#user_name').val();
+			websocket_server.send(
+				JSON.stringify({
+					'type': 'chat',
+					'user_id': 1,
+					'user_name': 'admin',
+					'chat_msg': user_name + ' has joined chat'
+                }))
+		
+		};
+    	
+                
+            });
+</script>

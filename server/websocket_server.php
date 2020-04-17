@@ -64,7 +64,7 @@ class Chat implements MessageComponentInterface {
 
 				$response_from =
 
-					"<div class='chat-entry card p-1 m-1 bg-primary'>
+					"<div class='chat-entry card p-1 m-1'>
 					<div class='row'>
 						<div class='col-md-12'>
 							<div class='d-flex'>

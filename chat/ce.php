@@ -1,5 +1,5 @@
 <?php include('../config.php');?>
-<?php $query = mysqli_query($conn, "SELECT * FROM chat LEFT JOIN `users` ON users.userid=chat.userid WHERE chat_room_id='1' ORDER BY chatid DESC LIMIT 20 ") or die(mysqli_error());
+<?php $query = mysqli_query($conn, "SELECT * FROM chat LEFT JOIN `users` ON users.userid=chat.userid WHERE chat_room_id='1' ORDER BY chatid DESC LIMIT 40 ") or die(mysqli_error());
 			while ($row = mysqli_fetch_array($query)) {
 			?>
 
