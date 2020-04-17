@@ -6,6 +6,8 @@
 		websocket_server.onopen = function(e) {
 			$('#widget-right').load('chat/widget-right.php');
 			$('#chat_output').load('chat/ce.php');
+			autoScrolling();
+
 		};
 
 		websocket_server.onclose = function(e) {
@@ -28,11 +30,6 @@
 
 		}
 
-
-
-
-
-		
 
 		$('#send_msg').on('click', function() {
 			if ($('#chat_input').val() == "") {
@@ -81,7 +78,7 @@
 					checkSession();
 
 					function checkSession(){
-					var c = getCookie("visited");
+					var c = getCookie("login");
 					if (c === "yes") {
 					
 
@@ -115,7 +112,7 @@
 						};
 										
 					}
-					setCookie("visited", "yes", 1); // expire in 1 year; or use null to never expire
+					setCookie("login", "yes", 1); // expire in 1 year; or use null to never expire
 					}
 
 

@@ -105,13 +105,6 @@ include('template/header.php');
 </div>
 <!-- page-wrapper -->
 
-<?php
-ob_start();
-require('./chat/welcome.php');
-$data = ob_get_clean();
-?>
-
-
 
 <script src="js/chat.js"></script>
 <?php include('template/footer.php'); ?>
