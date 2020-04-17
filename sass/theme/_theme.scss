@@ -7,6 +7,11 @@ body,html{
   .bg-dark-blue{
     background: $dark-blue;
   }
+
+  //Navbar
+  .navbar{
+    padding: 0.5rem !important;
+  }
   
        
   
@@ -611,7 +616,7 @@ body,html{
   
   
    .page-wrapper.toggled .sidebar-wrapper,.page-wrapper.toggled-right .sidebar-right-wrapper{
-    padding-top: 60px;
+    padding-top: 55px;
   }
   
   

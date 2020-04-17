@@ -51,9 +51,9 @@ include('template/header.php');
 				<ul class="nav navbar-nav mr-0 chat-nav-icons">
 					<?php
 					if (isset($_SESSION['loggedIn']) && $_SESSION['loggedIn'] == true) {
-						echo "<li class='nav-item'><a class='nav-link' href='/logout.php'><i class='fa fa-sign-out'></i></a></li>";
+						echo "<li class='nav-item pr-0'><a class='nav-link pr-0' href='/logout.php'><i class='fa fa-sign-out'></i></a></li>";
 					} else {
-						echo "<li class='nav-item'><a class='nav-link' href='/login.php'><i class='fa fa-sign-in'></i></a></li>";
+						echo "<li class='nav-item pr-0'><a class='nav-link pr-0' href='/login.php'><i class='fa fa-sign-in'></i></a></li>";
 					}
 					?>
 				</ul>
