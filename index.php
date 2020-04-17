@@ -20,7 +20,7 @@ include('template/header.php');
 
 
 
-<div class="page-wrapper chiller-theme toggled">
+<div class="page-wrapper chiller-theme toggled toggled-right">
 
 	<nav id="sidebar" class="sidebar-wrapper">
 
