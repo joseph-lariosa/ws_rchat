@@ -30,6 +30,9 @@ if (isset($_POST['login'])) {
         $_SESSION['userName'] = $dbusername;
         $_SESSION['loggedIn'] = "TRUE";
         $_SESSION['userRole'] = $dbrole;
+        if($dbrole == 'ADMIN'){
+            $_SESSION['isAdmin'] = "TRUE";
+        }
         header('location:/index.php');
     }
 }

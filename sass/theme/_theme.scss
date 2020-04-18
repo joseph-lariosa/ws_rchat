@@ -722,3 +722,12 @@ body,html{
     height: 100vh;
     padding-top: 20vh;
   }
+
+
+
+
+  //Bootstrap Mods
+  .modal-header{
+    border-color: $dark !important;
+    @extend .pb-0;
+  }

@@ -1,13 +1,13 @@
 
   	jQuery(function($) {
 		// Websocket
+
 		var websocket_server = new WebSocket("ws://rchat.test:8080/");
 
 		websocket_server.onopen = function(e) {
 			$('#widget-right').load('chat/widget-right.php');
 			$('#chat_output').load('chat/ce.php');
 			autoScrolling();
-
 		};
 
 		websocket_server.onclose = function(e) {

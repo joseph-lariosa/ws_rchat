@@ -47,7 +47,7 @@
           </div>
           <div class="user-details text-white pl-2 pb-2 pt-1">
             <ul class="list-unstyled">
-              <li class="list-unstyled-item">
+              <li class="list-unstyled-item text-capitalize">
                 <a href="#" data-toggle="modal" data-target="#<?php echo $dbusername ?>"><?php echo $dbuserfn . " " . $dbuserln; ?></a>
               </li>
               <li class="list-unstyled-item">
@@ -157,7 +157,7 @@
 														} ?>">
 										</div>
 									</div>
-									<div class="user-details">
+									<div class="user-details text-capitalize">
 										<?php $userID = $row['userid'];  ?>
 										<?php $userName = $row['username'];  ?>
 										<a href="#" data-toggle="modal" data-target="#<?php echo $row["username"]; ?>"><?php echo $row["firstname"] . " " . $row["lastname"] . "<br>"; ?></a>
@@ -184,7 +184,7 @@
               <div class="modal-dialog modal-lg bg-dark" role="document">
                 <div class="modal-content bg-dark">
                   <div class="modal-header">
-                    <h5 class="modal-title bg-dark text-white" id="<?php echo $row["username"]; ?>"><?php echo $row["firstname"] . " " . $row["lastname"]; ?></h5>
+                    <h5 class="modal-title bg-dark text-white text-capitalize" id="<?php echo $row["username"]; ?>">Profile</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                       <span aria-hidden="true">&times;</span>
                     </button>
@@ -204,14 +204,11 @@
                       <div class="col-md-8 user-details">
                         <?php $userID = $row['userid'];  ?>
                         <?php $userName = $row['username'];  ?>
-                        <h3><?php echo $row["firstname"] . " " . $row["lastname"] . "<br>"; ?></h3>
+                        <h3 class="text-capitalize"><?php echo $row["firstname"] . " " . $row["lastname"] . "<br>"; ?></h3>
                         <?php $uRole = $row['role']; ?>
                         <?php echo "<div class='badge badge-" . $uRole . "'>" . $uRole . "</div>"; ?>
                         <?php echo "<span class='badge badge-level'>Lvl " . $row['user_level'] . "</span> "; ?>
             
-                        <div class="progress bg-dark-blue mt-2">
-                          <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="<?php echo $row['chat_point'];?>" aria-valuemin="0" aria-valuemax="<?php echo $row['max_exp'];?>" style="width: <?php echo $row['chat_point'];?>%">EXP</div>
-                        </div>
 
 
                         <div class="social-link mt-3">
