@@ -1,4 +1,140 @@
 <?php include('../config.php'); session_start();?>
+
+
+<div class="sidebar-widget ml-2 mr-2 mb-2">
+    <div class="widget-header card bg-dark p-2 pt-0 mb-2">
+      <h6 class="text-white mb-0">My Profile</h6>
+    </div>
+
+    <?php 
+    $query = ("SELECT * FROM users WHERE username='{$_SESSION['userName']}'");
+    $select_user_query = mysqli_query($conn, $query);
+
+    if (!$select_user_query) {
+      die("QUERY FAILED" . mysqli_error($conn));
+    }
+
+    while ($row = mysqli_fetch_array($select_user_query)) {
+      $dbuserId = $row['userid'];
+      $dbusername = $row['username'];
+      $dbuserfn = $row['firstname'];
+      $dbuserln = $row['lastname'];
+      $dbuser_photo = $row['img_url'];
+      $dbUserStatus = $row['login_status'];
+      $dbUserBanStatus = $row['ban_status'];
+      $dbrole = $row['role'];
+      $dbLevel = $row['user_level'];
+      $dbUserbio = $row['bio'];
+      $dbUserfb = $row['fb'];
+      $dbUsertw = $row['tw'];
+      $dbUserig = $row['ig'];
+    }
+    ?>
+
+    <?php if ($dbusername == $_SESSION['userName']) { ?>
+
+      <div class="card bg-dark pb-2">
+        <div class="d-flex">
+          <div class="pl-2 pt-2">
+            <div class="dp-wrapper">
+              <img src="<?php if ($dbuser_photo != '') {
+                          echo "uploads/" . $dbuser_photo . "";
+                        } else {
+                          echo "images/default-person.png";
+                        } ?>">
+            </div>
+
+          </div>
+          <div class="user-details text-white pl-2 pb-2 pt-1">
+            <ul class="list-unstyled">
+              <li class="list-unstyled-item">
+                <a href="#" data-toggle="modal" data-target="#<?php echo $dbusername ?>"><?php echo $dbuserfn . " " . $dbuserln; ?></a>
+              </li>
+              <li class="list-unstyled-item">
+                <span class="badge badge-<?php echo $dbrole; ?>">
+                  <?php echo $dbrole; ?> <span class="badge badge-warning">
+                    Level: <?php echo $dbLevel; ?>
+                  </span>
+                </span>
+              </li>
+            </ul>
+
+          </div>
+        </div>
+        <div class="update-toggle">
+          <ul class="list-unstyled">
+            <li class="list-unstyled-item">
+              <a href="#update-profile" class="mr-0 text-muted" data-toggle="modal" data-target="#update_profile"><i class="fa fa-gear"></i> Update</a>
+            </li>
+          </ul>
+        </div>
+
+      </div>
+
+
+      <!-- Modal -->
+      <div class="modal fade" id="update_profile" tabindex="-1" role="dialog" aria-labelledby="update_profile" aria-hidden="true">
+        <div class="modal-dialog modal-lg text-white" role="document">
+          <div class="modal-content bg-dark">
+            <div class="modal-header">
+              <h5 class="modal-title" id="update_profile">Update Profile</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+
+              <h6>Update photo</h6>
+              <form method="post" action="profiles/upload.php" enctype="multipart/form-data">
+                <div class="custom-file mb-2">
+                  <input type="file" name="file" class="custom-file-input" id="customFile">
+                  <label class="custom-file-label" for="customFile">Choose file</label>
+                </div>
+                <button class="btn btn-primary" type="submit" name="but_upload">Upload</button>
+                <script>
+                  $(".custom-file-input").on("change", function() {
+                    var fileName = $(this).val().split("\\").pop();
+                    $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+                  });
+                </script>
+              </form>
+
+              <hr class="bg-white">
+
+              <h6>Update Information</h6>
+              <form method="post" action="profiles/update_info.php">
+                <div class="form-group">
+                  <input type="text" name="firstname" id="firstname" class="form-control mb-2" placeholder="<?php echo $dbuserfn; ?>">
+                  <input type="text" name="lastname" id="lastname" class="form-control mb-2" placeholder="<?php echo $dbuserln; ?>">
+                </div>
+          
+
+
+                <div class="form-group">
+                  <label class="label">Bio</label>
+                  <textarea type="text" name="bio" id="bio" class="form-control mb-2" <?php if ($dbUserbio == ''){ echo "placeholder='Say something about your self.'"; }?>><?php { echo $dbUserbio; }?></textarea>
+                  <label class="label">Social Accounts</label>
+                  <input type="text" name="fb" id="fb" class="form-control mb-2" <?php if ($dbUserfb == ''){ echo "placeholder='https://facebook.com/username'"; } else { echo "value='$dbUserfb'"; } ?>>
+                  <input type="text" name="tw" id="tw" class="form-control mb-2" <?php if ($dbUsertw == ''){ echo "placeholder='https://twitter.com/username'"; } else { echo "value='$dbUsertw'"; } ?>>
+                  <input type="text" name="ig" id="ig" class="form-control mb-2" <?php if ($dbUserig == ''){ echo "placeholder='https://instagram.com/username'"; } else { echo "value='$dbUserig'"; } ?>>
+                </div>
+                <button class="btn btn-primary" type="submit" name="user_meta">Update</button>
+              </form>
+
+            </div>
+
+
+          </div>
+        </div>
+      </div>
+
+    <?php } ?>
+    </div>
+
+    <!--//End Profile Card-->
+
+
+
 <div class="sidebar-widget ml-2 mr-2 mb-2">
 			<div class="widget-header card bg-dark p-2 pt-0 mb-2">
 				<h6 class="text-white mb-0">Online Users</h6>
@@ -14,7 +150,7 @@
 								<div class="d-flex">
 									<div class="user-dp mr-2">
 										<div class="dp-wrapper">
-											<img src="<?php if ($row['img_url'] != '') {
+											<img  data-toggle="modal" data-target="#<?php echo $row["username"]; ?>" src="<?php if ($row['img_url'] != '') {
 															echo "uploads/" . $row['img_url'] . "";
 														} else {
 															echo "images/default-person.png";
@@ -72,7 +208,12 @@
                         <?php $uRole = $row['role']; ?>
                         <?php echo "<div class='badge badge-" . $uRole . "'>" . $uRole . "</div>"; ?>
                         <?php echo "<span class='badge badge-level'>Lvl " . $row['user_level'] . "</span> "; ?>
-                        <?php  echo "Current Exp:".$row['chat_point']." Exp to Next Level: ".$row['max_exp']."";  ?>
+            
+                        <div class="progress bg-dark-blue mt-2">
+                          <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="<?php echo $row['chat_point'];?>" aria-valuemin="0" aria-valuemax="<?php echo $row['max_exp'];?>" style="width: <?php echo $row['chat_point'];?>%">EXP</div>
+                        </div>
+
+
                         <div class="social-link mt-3">
                             <ul class="list-inline">
                               <?php if($row['fb'] != ''){ echo "<li class='list-inline-item'><a href='".$row['fb']."'><i class='fa fa-facebook fa-2x'></i></a></li>";}?>

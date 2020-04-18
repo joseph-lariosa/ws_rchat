@@ -41,7 +41,7 @@
 				var chat_msg = $('#chat_input').val();
 				var room_id = $('#room_id').val();
                 var user_name = $('#user_name').val();
-                var user_id = $('#user_id').val();
+				var user_id = $('#user_id').val();
 				websocket_server.send(
 					JSON.stringify({
 						'type': 'chat',

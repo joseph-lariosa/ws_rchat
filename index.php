@@ -10,6 +10,18 @@ $userRole = $_SESSION['userName'];
          header("Location: login.php");
    }
 
+
+   $userData = mysqli_query($conn, "SELECT * FROM users WHERE userid=$userID") or die(mysqli_error());
+   $getUserdata = mysqli_fetch_array($userData);
+   $banned = $getUserdata['ban_status'];
+
+   if($banned != 1){
+	   $_SESSION['u_status'] = 1;
+	}else{
+	   header("Location: login.php");
+	   $_SESSION['message'] = "You have been banned";
+   }
+ 
 include('template/header.php');
 ?>
 

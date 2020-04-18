@@ -43,6 +43,8 @@ class Chat implements MessageComponentInterface {
 
 		$userData = mysqli_query($conn, "SELECT * FROM users WHERE userid=$user_id") or die(mysqli_error());
 		$getUserdata = mysqli_fetch_array($userData);
+
+		
 		
 
 		switch ($type) {
@@ -56,8 +58,9 @@ class Chat implements MessageComponentInterface {
 				//$by = $getUserdata['action_by];
 				$chat_msg = $data->chat_msg;
 
+
 				if($img_url != ''){
-					$img_url = $base_url."uploads/".$img_url;
+					$img_url = "uploads/".$img_url;
 				} else {
 					$img_url = "images/default-person.png";
 				}
@@ -67,6 +70,7 @@ class Chat implements MessageComponentInterface {
 					"<div class='chat-entry card p-1 m-1'>
 					<div class='row'>
 						<div class='col-md-12'>
+						
 							<div class='d-flex'>
 								<div class='c-left mr-2'>
 									<div class='dp-wrapper'>
@@ -92,6 +96,7 @@ class Chat implements MessageComponentInterface {
 				"<div class='chat-entry card p-1 m-1'>
 					<div class='row'>
 						<div class='col-md-12'>
+						
 							<div class='d-flex'>
 								<div class='c-left mr-2'>
 									<div class='dp-wrapper'>
@@ -132,4 +137,3 @@ $server = IoServer::factory(
 	8080
 );
 $server->run();
-?>
