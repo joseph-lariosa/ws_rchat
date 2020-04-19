@@ -203,7 +203,8 @@
                       </div>
                       <div class="col-md-8 user-details">
                         <?php $userID = $row['userid'];  ?>
-                        <?php $userName = $row['username'];  ?>
+                        <?php $dbusername = $row['username'];  ?>
+
                         <h3 class="text-capitalize"><?php echo $row["firstname"] . " " . $row["lastname"] . "<br>"; ?></h3>
                         <?php $uRole = $row['role']; ?>
                         <?php echo "<div class='badge badge-" . $uRole . "'>" . $uRole . "</div>"; ?>
@@ -235,12 +236,12 @@
                         <div class="admin-chat-controls d-flex float-right">
                             <form class="mr-2">
                             <input name="ban_user" id="ban_user" type="hidden" value="<?php echo $userID; ?>">
-                            <input name="ban_user_name" id="ban_user_name" type="hidden" value="<?php echo $userName; ?>">
-                            <button type="submit" class="mr-0 btn badge badge-danger" id="ban_user">Ban</button>
+                            <input name="ban_user_name" id="ban_user_name" type="hidden" value="<?php echo $dbusername; ?>">
+                            <button type="submit" class="mr-0 btn badge badge-danger ban_button <?php echo $dbusername; ?>" id="ban_user">Ban</button>
                             </form>
                             <form>
                             <input name="kick_user" id="kick_user" type="hidden" value="<?php echo $userID; ?>">
-                            <input name="kick_user_name" id="kick_user_name" type="hidden" value="<?php echo $userName; ?>">
+                            <input name="kick_user_name" id="kick_user_name" type="hidden" value="<?php echo $dbusername; ?>">
                             <button type="submit" class="mr-0 btn badge badge-warning" id="kick_user">Kick</button>
                             </form>
                         </div>
@@ -252,4 +253,53 @@
               </div>
             </div>
 
+            <script>
+          	jQuery(function($) {
+                // Websocket
+
+                var websocket_server = new WebSocket("ws://rchat.test:8080/");
+
+                $('.ban_button.<?php echo $dbusername; ?>').on('click', function() {
+                    var banned_user =  '<?php echo $dbusername?>';
+                    var chat_msg = "<span class='badge badge-danger'>" + banned_user + "</span>" + " has been banned."
+                    var room_id = "1"
+                    var user_id = $('#user_id').val();
+
+                    websocket_server.send(
+                      JSON.stringify({
+                        'type': 'chat',
+                        'user_id': '1',
+                        'chat_msg': chat_msg
+                      })
+                    );
+                    $.ajax({
+                      type: "POST",
+                      url: "chat/bot_send.php",
+                      data: {
+                        msg: chat_msg,
+                        id: room_id,
+                      },
+                      success: function() {
+                        autoScrolling_msg();
+                      }
+                    });
+                    $.ajax({
+                      type: "POST",
+                      url: "chat/actions/ban.php",
+                      data: {
+                        ban: "1",
+                        user_to_ban: banned_user,
+                      },
+                      success: function() {
+                        autoScrolling_msg();
+                      }
+                    });
+                  });
+
+                });
+         </script>
+
          <?php }}?>
+
+
+         

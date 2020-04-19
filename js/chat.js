@@ -39,6 +39,7 @@
 			} else {
 				event.preventDefault();
 				var chat_msg = $('#chat_input').val();
+				var StrippedString = chat_msg.replace(/(<([^>]+)>)/ig,"");
 				var room_id = $('#room_id').val();
                 var user_name = $('#user_name').val();
 				var user_id = $('#user_id').val();
@@ -47,7 +48,7 @@
 						'type': 'chat',
 						'user_id': user_id,
 						'user_name': user_name,
-						'chat_msg': chat_msg
+						'chat_msg': StrippedString
 					})
 				);
 				$.ajax({
