@@ -1,3 +1,5 @@
+	
+	
 	<?php $query=mysqli_query($conn,"SELECT * FROM chat LEFT JOIN `user` ON user.userid=chat.userid WHERE chat_room_id='$id' ORDER BY chat_date DESC LIMIT 50 ") or die(mysqli_error());
 	while($row=mysqli_fetch_array($query)){
 	?>	
@@ -24,4 +26,4 @@
 			</div>
 		
 
-		<?php } ?>
+	<?php } ?>

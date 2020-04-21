@@ -46,6 +46,8 @@ if(isset($_POST['registration'])) {
         $_SESSION['message']="Password did not match";
         header('location:../signup.php?err=4');
     }elseif($username !== $dbusername && $email !== $dbemail){
+
+        $password= md5($password);
         $query = ("INSERT INTO users (email,username,password,firstname,lastname,role,user_level,max_exp) VALUES ('$email','$username','$password','$firstName','$lastName','NEWBIE','1','10')");
         $select_user_query=mysqli_query($conn,$query);
         header('location:../login.php?reg_success=1');

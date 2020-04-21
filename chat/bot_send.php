@@ -7,7 +7,7 @@
     
     if(isset($_POST['msg'])){		
 		$msg = addslashes($_POST['msg']);
-		$msg = strip_tags($_POST['msg']);
+		//$msg = strip_tags($_POST['msg']);
         $id = $_POST['id'];
         mysqli_query($conn,"INSERT INTO chat (chat_room_id, chat_msg, userid, chat_date) VALUES ('1', '$msg' , '1', NOW())") or die(mysqli_error());
         

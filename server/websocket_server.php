@@ -6,36 +6,42 @@ use Ratchet\ConnectionInterface;
 use Ratchet\Server\IoServer;
 use Ratchet\Http\HttpServer;
 use Ratchet\WebSocket\WsServer;
+
 require_once 'vendor/autoload.php';
 require 'config.php';
 
 
-class Chat implements MessageComponentInterface {
+class Chat implements MessageComponentInterface
+{
 	protected $clients;
 	protected $users;
 
-	public function __construct() {
+	public function __construct()
+	{
 		$this->clients = new \SplObjectStorage;
 	}
 
-	public function onOpen(ConnectionInterface $conn) {
+	public function onOpen(ConnectionInterface $conn)
+	{
 		$this->clients->attach($conn);
 		// $this->users[$conn->resourceId] = $conn;
 	}
 
-	public function onClose(ConnectionInterface $conn) {
+	public function onClose(ConnectionInterface $conn)
+	{
 		$this->clients->detach($conn);
 		// unset($this->users[$conn->resourceId]);
 	}
 
 
-	
-	public function onMessage(ConnectionInterface $from,  $data) {
+
+	public function onMessage(ConnectionInterface $from,  $data)
+	{
 
 		global $conn;
 		global $base_url;
 
-		
+
 		$from_id = $from->resourceId;
 		$data = json_decode($data);
 		$type = $data->type;
@@ -44,8 +50,8 @@ class Chat implements MessageComponentInterface {
 		$userData = mysqli_query($conn, "SELECT * FROM users WHERE userid=$user_id") or die(mysqli_error());
 		$getUserdata = mysqli_fetch_array($userData);
 
-		
-		
+
+
 
 		switch ($type) {
 			case 'chat':
@@ -54,16 +60,18 @@ class Chat implements MessageComponentInterface {
 				$role = $getUserdata['role'];
 				$img_url = $getUserdata['img_url'];
 				//$onlineStatus = $getUserdata['online_status'];
-				//$banStatus = $getUserdata['ban_status'];
+				$banStatus = $getUserdata['ban_status'];
 				//$by = $getUserdata['action_by];
 				$chat_msg = $data->chat_msg;
+				$kicked = $getUserdata['kick'];
 
 
-				if($img_url != ''){
-					$img_url = "uploads/".$img_url;
+				if ($img_url != '') {
+					$img_url = "uploads/" . $img_url;
 				} else {
 					$img_url = "images/default-person.png";
 				}
+
 
 				$response_from =
 
@@ -93,7 +101,7 @@ class Chat implements MessageComponentInterface {
 
 				$response_to =
 
-				"<div class='chat-entry card p-1 m-1'>
+					"<div class='chat-entry card p-1 m-1'>
 					<div class='row'>
 						<div class='col-md-12'>
 						
@@ -115,20 +123,35 @@ class Chat implements MessageComponentInterface {
 					</div>	
 				</div>";
 
+				$banned = "<script>
+								alert('Your account has been banned.');
+								window.location.href = './logout.php';
+							</script>";
+
+				$kick = "<script>
+								alert('Admin has kicked you out.');
+								window.location.href = './logout.php';
+							</script>";
+
 				// Output
-				$from->send(json_encode(array("type"=>$type,"msg"=>$response_from)));
-				foreach($this->clients as $client)
-				{
-					if($from!=$client)
-					{
-						$client->send(json_encode(array("type"=>$type,"msg"=>$response_to)));
+				if ($banStatus == 0 && $kicked == 0) {
+					$from->send(json_encode(array("type" => $type, "msg" => $response_from)));
+					foreach ($this->clients as $client) {
+						if ($from != $client) {
+							$client->send(json_encode(array("type" => $type, "msg" => $response_to)));
+						}
 					}
+					break;
+				} elseif ($banStatus == 1) {
+					$from->send(json_encode(array("type" => $type, "msg" => $banned)));
+				} elseif ($kicked == 1) {
+					$from->send(json_encode(array("type" => $type, "msg" => $kick)));
 				}
-				break;
 		}
 	}
 
-	public function onError(ConnectionInterface $conn, \Exception $e) {
+	public function onError(ConnectionInterface $conn, \Exception $e)
+	{
 		$conn->close();
 	}
 }

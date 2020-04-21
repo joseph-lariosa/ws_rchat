@@ -1,6 +1,7 @@
 <?php include('../config.php'); session_start();?>
 
 
+
 <div class="sidebar-widget ml-2 mr-2 mb-2">
     <div class="widget-header card bg-dark p-2 pt-0 mb-2">
       <h6 class="text-white mb-0">My Profile</h6>
@@ -234,15 +235,25 @@
                       <div class="widget-admin mt-2">
                         Admin Action
                         <div class="admin-chat-controls d-flex float-right">
+
+                        <?php if($row['ban_status'] == 0){ ?>
                             <form class="mr-2">
                             <input name="ban_user" id="ban_user" type="hidden" value="<?php echo $userID; ?>">
                             <input name="ban_user_name" id="ban_user_name" type="hidden" value="<?php echo $dbusername; ?>">
                             <button type="submit" class="mr-0 btn badge badge-danger ban_button <?php echo $dbusername; ?>" id="ban_user">Ban</button>
                             </form>
+                        <?php } elseif($row['ban_status'] == 1) { ?>
+                          <form class="mr-2">
+                            <input name="ban_user" id="ban_user" type="hidden" value="<?php echo $userID; ?>">
+                            <input name="ban_user_name" id="ban_user_name" type="hidden" value="<?php echo $dbusername; ?>">
+                            <button type="submit" class="mr-0 btn badge badge-success unban_button <?php echo $dbusername; ?>" id="ban_user">Un-Ban</button>
+                            </form>
+                        <?php } ?>
+                           
                             <form>
                             <input name="kick_user" id="kick_user" type="hidden" value="<?php echo $userID; ?>">
                             <input name="kick_user_name" id="kick_user_name" type="hidden" value="<?php echo $dbusername; ?>">
-                            <button type="submit" class="mr-0 btn badge badge-warning" id="kick_user">Kick</button>
+                            <button type="submit" class="mr-0 btn badge badge-warning kick_button <?php echo $dbusername; ?>" id="kick_user">Kick</button>
                             </form>
                         </div>
                     </div>
@@ -296,6 +307,82 @@
                     });
                   });
 
+
+                  $('.unban_button.<?php echo $dbusername; ?>').on('click', function() {
+                    var banned_user =  '<?php echo $dbusername?>';
+                    var chat_msg = "<span class='badge badge-success'>" + banned_user + "</span>" + " has been un-banned."
+                    var room_id = "1"
+                    var user_id = $('#user_id').val();
+
+                    websocket_server.send(
+                      JSON.stringify({
+                        'type': 'chat',
+                        'user_id': '1',
+                        'chat_msg': chat_msg
+                      })
+                    );
+                    $.ajax({
+                      type: "POST",
+                      url: "chat/bot_send.php",
+                      data: {
+                        msg: chat_msg,
+                        id: room_id,
+                      },
+                      success: function() {
+                        autoScrolling_msg();
+                      }
+                    });
+                    $.ajax({
+                      type: "POST",
+                      url: "chat/actions/unban.php",
+                      data: {
+                        ban: "1",
+                        user_to_ban: banned_user,
+                      },
+                      success: function() {
+                        autoScrolling_msg();
+                      }
+                    });
+                  });
+
+
+                  $('.kick_button.<?php echo $dbusername; ?>').on('click', function() {
+                    var kick_user =  '<?php echo $dbusername?>';
+                    var chat_msg = "<span class='badge badge-success'>" + kick_user + "</span>" + " was kicked."
+                    var room_id = "1"
+                    var user_id = $('#user_id').val();
+
+                    websocket_server.send(
+                      JSON.stringify({
+                        'type': 'chat',
+                        'user_id': '1',
+                        'chat_msg': chat_msg
+                      })
+                    );
+                    $.ajax({
+                      type: "POST",
+                      url: "chat/bot_send.php",
+                      data: {
+                        msg: chat_msg,
+                        id: room_id,
+                      },
+                      success: function() {
+                        autoScrolling_msg();
+                      }
+                    });
+                    $.ajax({
+                      type: "POST",
+                      url: "chat/actions/kick.php",
+                      data: {
+                        kick: "1",
+                        user_to_kick: kick_user,
+                      },
+                      success: function() {
+                        autoScrolling_msg();
+                      }
+                    });
+
+                  });
                 });
          </script>
 

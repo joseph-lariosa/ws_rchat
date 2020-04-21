@@ -81,7 +81,7 @@ include('template/header.php');
 				<div class="input-group-prepend d-none d-md-block d-lg-block d-xl-block">
 					<button class="btn btn-warning" id="emoji" type="button">😄</button>
 				</div>
-				<input type="text" id="chat_input" class="form-control input-lg" placeholder="Say something..." autocomplete="off">
+				<input type="text" id="chat_input" class="form-control input-lg send_chat" placeholder="Say something..." autocomplete="off">
 				<input type="hidden" id="1">
 				<input type="hidden" id="user_name" value="<?php echo $_SESSION['userName'];?>">
 				<input type="hidden" id="user_id" value="<?php echo $_SESSION['userID'];?>">
@@ -116,7 +116,15 @@ include('template/header.php');
 
 </div>
 <!-- page-wrapper -->
-
+<script>
+jQuery(function ($) {
+	$('#send_msg').on('click', function () {
+		<?php if($banned != 0){ ?>
+			window.location.href = './logout.php';
+		<?php }?>
+	});
+});
+</script>
 
 <script src="js/chat.js"></script>
 <?php include('template/footer.php'); ?>

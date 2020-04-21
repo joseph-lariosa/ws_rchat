@@ -8,6 +8,7 @@ if (isset($_POST['login'])) {
     $username = strtolower($username);
     $username = mysqli_real_escape_string($conn, $username);
     $password = mysqli_real_escape_string($conn, $password);
+    $password = md5($password);
     $query = ("SELECT * FROM users WHERE username='{$username}' and password='$password'");
     $select_user_query = mysqli_query($conn, $query);
 
@@ -26,6 +27,8 @@ if (isset($_POST['login'])) {
         header('location:/login.php');
     } else {
         mysqli_query($conn, "UPDATE users SET login_status=1,last_login=NOW() WHERE username='$username'");
+        mysqli_query($conn, "UPDATE users SET kick=0,last_login=NOW() WHERE username='$username'");
+
         $_SESSION['userID'] = $dbuserid;
         $_SESSION['userName'] = $dbusername;
         $_SESSION['loggedIn'] = "TRUE";
