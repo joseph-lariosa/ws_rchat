@@ -1,6 +1,7 @@
-<?php include('../config.php'); session_start();?>
-
-
+<?php 
+include('../config.php'); 
+include('../class/user.php');
+?>
 
 <div class="sidebar-widget ml-2 mr-2 mb-2">
     <div class="widget-header card bg-dark p-2 pt-0 mb-2">

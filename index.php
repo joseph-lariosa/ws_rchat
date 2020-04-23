@@ -1,5 +1,6 @@
 <?php
-include './config.php';
+include 'config.php';
+include './includes/defaults.inc.php';	
 session_start();
 
 $userID = $_SESSION['userID'];
@@ -7,7 +8,7 @@ $userName = $_SESSION['userName'];
 $userRole = $_SESSION['userName'];
 
    if (!isset($_SESSION) || !isset($_SESSION['userName'])) {
-         header("Location: login.php");
+         header("Location: /login");
    }
 
 
@@ -18,7 +19,7 @@ $userRole = $_SESSION['userName'];
    if($banned != 1){
 	   $_SESSION['u_status'] = 1;
 	}else{
-	   header("Location: login.php");
+	   header("Location: /login");
 	   $_SESSION['message'] = "You have been banned";
    }
  
@@ -63,7 +64,7 @@ include('template/header.php');
 				<ul class="nav navbar-nav mr-0 chat-nav-icons">
 					<?php
 					if (isset($_SESSION['loggedIn']) && $_SESSION['loggedIn'] == true) {
-						echo "<li class='nav-item pr-0'><a class='nav-link pr-0' href='/logout.php'><i class='fa fa-sign-out'></i></a></li>";
+						echo "<li class='nav-item pr-0'><a id='logout-link' class='nav-link pr-0' href='/logout.php'><i class='fa fa-sign-out'></i></a></li>";
 					} else {
 						echo "<li class='nav-item pr-0'><a class='nav-link pr-0' href='/login.php'><i class='fa fa-sign-in'></i></a></li>";
 					}

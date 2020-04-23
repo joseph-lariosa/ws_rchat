@@ -1,5 +1,6 @@
 <?php
 include '../config.php';
+include '../includes/defaults.inc.php';
 session_start();
 
 if (isset($_POST['login'])) {
@@ -24,7 +25,7 @@ if (isset($_POST['login'])) {
 
     if ($username !== $dbusername && $password !== $dbpassword) {
         $_SESSION['message'] = "Either the username or password is incorrect. Please Try Again";
-        header('location:/login.php');
+        header('location:/login/');
     } else {
         mysqli_query($conn, "UPDATE users SET login_status=1,last_login=NOW() WHERE username='$username'");
         mysqli_query($conn, "UPDATE users SET kick=0,last_login=NOW() WHERE username='$username'");
@@ -36,7 +37,7 @@ if (isset($_POST['login'])) {
         if($dbrole == 'ADMIN'){
             $_SESSION['isAdmin'] = "TRUE";
         }
-        header('location:/index.php');
+        header('location:'.$base_url.'/index.php');
     }
 }
 ?>
