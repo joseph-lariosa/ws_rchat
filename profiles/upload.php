@@ -6,6 +6,7 @@ session_start();
 if(isset($_POST['but_upload'])){
     $username = $_SESSION['userName'];
     $name = $_FILES['file']['name'];
+    $name = md5($name);
     $target_dir = "../uploads/";
     $target_file = $target_dir . basename($_FILES["file"]["name"]);
   
