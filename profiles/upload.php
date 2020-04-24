@@ -25,8 +25,10 @@ if(isset($_POST['but_upload'])){
     
        // Upload file
        move_uploaded_file($_FILES['file']['tmp_name'],$target_dir.$name);
-       header('location:../index.php');
+       header('location:../index.php?upload=success');
   
+    } else {
+      header('location:../index.php?no_Change');
     }
    
   }

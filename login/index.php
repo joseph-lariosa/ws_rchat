@@ -1,5 +1,11 @@
 <?php session_start();?>
-<?php include('../template/header.php'); include('../includes/defaults.inc.php');?>
+<?php include('../template/header.php'); include('../includes/defaults.inc.php');
+
+if (isset($_SESSION) && isset($_SESSION['userName'])) {
+    header("Location: ../index.php");
+} 
+
+?>
 
 <div class="container" id="login-wrapper">
 

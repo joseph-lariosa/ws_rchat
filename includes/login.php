@@ -37,6 +37,9 @@ if (isset($_POST['login'])) {
         if($dbrole == 'ADMIN'){
             $_SESSION['isAdmin'] = "TRUE";
         }
+        if($dbrole == 'MOD'){
+            $_SESSION['isMOD'] = "TRUE";
+        }
         header('location:'.$base_url.'/index.php');
     }
 }

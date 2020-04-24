@@ -79,6 +79,7 @@ if(mysqli_num_rows($result) > 0)
         $userphoto = "../images/default-person.png";
     }
 
+
   $output .= '
    <tr>
     <td>'.$row["userid"].'</td>
@@ -90,8 +91,6 @@ if(mysqli_num_rows($result) > 0)
     <td>'.$banstatus.'</td>
     <td><a href="#" data-toggle="modal" data-target="#'.$dbusername.'">Edit <i class="fa fa-cogs" aria-hidden="true"></i></a></td>
    </tr>
-
- 
   ';
 
   $modals .= '  <div class="modal fade" id="'.$dbusername.'" tabindex="-1" role="dialog" aria-labelledby="update_profile" aria-hidden="true">
@@ -104,28 +103,22 @@ if(mysqli_num_rows($result) > 0)
         </button>
       </div>
       <div class="modal-body">
-
-
-        <h6>Update Information</h6>
         <form method="post" class="mb-2" action="fetch-user-update.php">
-          <div class="form-group d-flex align-items-end">
-            <input type="hidden" name="cu" value="'.$dbusername.'"> 
-            <input type="text" name="firstname" id="firstname-'.$dbuserId.'" class="form-control mr-1" placeholder="'.$dbuserfn.'">
-            <input type="text" name="lastname" id="lastname-'.$dbuserId.'" class="form-control ml-1" placeholder="'.$dbuserln.'">
-          </div>
-          <div class="form-group d-flex align-items-end">
-          <input type="text" name="email" id="lastname-'.$dbemail.'" class="form-control" placeholder="'.$dbemail.'">
-        </div>
-        
-          <div class="form-group">
-          <label class="font-weight-strong"><span class="badge badge-warning">Ban Status:</span></label>
-          <input type="text" name="role" id="role-'.$dbbanstatus.'" class="form-control" placeholder="'.$dbbanstatus.'">
-          <label class="font-weight-strong"><span class="badge badge-info">Role:</span></label>
-          <input type="text" name="role" id="role-'.$dbuserId.'" class="form-control" placeholder="'.$dbroleform.'">
-
-        </div>
-        
-          
+            <div class="form-group d-flex align-items-end">
+                <input type="hidden" name="cu" value="'.$dbusername.'"> 
+                <input type="text" name="firstname" id="firstname-'.$dbuserId.'" class="form-control mr-1" placeholder="'.$dbuserfn.'">
+                <input type="text" name="lastname" id="lastname-'.$dbuserId.'" class="form-control ml-1" placeholder="'.$dbuserln.'">
+            </div>
+            <div class="form-group">
+                <input type="text" name="email" id="lastname-'.$dbemail.'" class="form-control" placeholder="'.$dbemail.'">
+                <textarea type="text" name="bio" class="mt-2 form-control mb-2">'.$dbUserbio.'</textarea>
+            </div>
+            <div class="form-group">
+                <label class="font-weight-strong"><span class="badge badge-warning">Ban Status:</span></label>
+                <input type="text" name="ban_status" class="form-control" placeholder="'.$dbbanstatus.'">
+                <label class="font-weight-strong"><span class="badge badge-info">Role:</span></label>
+                <input type="text" name="role" class="form-control" placeholder="'.$dbroleform.'">
+            </div>
           <button class="btn btn-primary" type="submit" name="user_meta_su">Update</button>
         </form>
       </div>
@@ -146,5 +139,3 @@ else
 {
  echo 'Data Not Found';
 }
-
-?>

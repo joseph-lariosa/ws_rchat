@@ -74,4 +74,16 @@ background: transparent;
 }
 
 
+.badge-VIP{
+    background: rgba(#6206cc,1);
+    @extend .text-white;
+}
+
+.badge-PREMIUM{
+    background: rgba(#ffd000,1);
+    @extend .text-dark;
+    font-weight: 900;
+    font-size: 0.5rem !important;
+}
+
 //Bootstrap

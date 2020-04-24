@@ -232,7 +232,7 @@ include('../class/user.php');
                       </div>
                     </div>
 
-                    <?php if (isset($_SESSION['isAdmin']) && $_SESSION['isAdmin'] == true) { ?>
+                    <?php if (isset($_SESSION['isAdmin']) && $_SESSION['isAdmin'] == true || isset($_SESSION['isMOD']) && $_SESSION['isMOD'] == true) { ?>
                       <div class="widget-admin mt-2">
                         Admin Action
                         <div class="admin-chat-controls d-flex float-right">
