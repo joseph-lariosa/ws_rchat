@@ -72,7 +72,6 @@ class Chat implements MessageComponentInterface
 					$img_url = "images/default-person.png";
 				}
 
-
 				$response_from =
 
 					"<div class='chat-entry card p-1 m-1'>
@@ -90,7 +89,8 @@ class Chat implements MessageComponentInterface
 								</div>
 												
 								<div class='c-right'>
-									<a href='#' class='text-white font-weight-bold'  id='us' onclick='changeValue(this)'>" . $userName . "</a><br>" . $chat_msg . "
+									
+									<a href='#' class='text-white font-weight-bold text-capitalize'  id='us' onclick='changeValue(this)'>" . $userName . "</a><br>". $chat_msg . "
 								</div>
 							</div>
 						</div>
@@ -116,7 +116,7 @@ class Chat implements MessageComponentInterface
 								</div>
 												
 								<div class='c-right'>
-									<a href='#' class='text-white font-weight-bold'  id='us' onclick='changeValue(this)'>" . $userName . "</a><br>" . $chat_msg . "
+								<a href='#' class='text-white font-weight-bold text-capitalize'  id='us' onclick='changeValue(this)'>" . $userName . "</a><br>". $chat_msg . "
 								</div>
 							</div>
 						</div>

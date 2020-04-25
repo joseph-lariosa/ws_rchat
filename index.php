@@ -75,12 +75,16 @@ include('template/header.php');
 
 
 		<div id="chat_output" class="default_scroll text-white d-flex flex-column-reverse"></div>
+			<form id="img-upload"action="./chat/chat_upload.php">
+				<input  class="chat-file-input" name="file" type="file" id="file" style="display:none;" accept="image/*"/>   
+				<input  type="hidden" value="" id="chat_img"/>  
+			</form> 
 
-
-		<form id="chatbox" class="forms pl-1 pr-1 mt-1 form-lg">
+		<form id="chatbox" class="forms pl-1 pr-1 mt-1 form-lg" enctype="multipart/form-data">
 			<div class="input-group">
-				<div class="input-group-prepend d-none d-md-block d-lg-block d-xl-block">
-					<button class="btn btn-warning" id="emoji" type="button">😄</button>
+				<div class="input-group-prepend">
+					<button class="d-none d-md-block d-lg-block d-xl-block btn btn-warning" id="emoji" type="button">😄</button>
+					<button class="btn btn-info text-truncate" style="max-width: 100px" id="file-upload" type="button" onclick="thisFileUpload();"><i class="fa fa-image"></i></button>
 				</div>
 				<input type="text" id="chat_input" class="form-control input-lg send_chat" placeholder="Say something..." autocomplete="off">
 				<input type="hidden" id="1">
@@ -125,6 +129,42 @@ jQuery(function ($) {
 		<?php }?>
 	});
 });
+
+function thisFileUpload() {
+		document.getElementById("file").click();
+   };
+   
+   $(".chat-file-input").on("change", function() {
+		var formData = new FormData();
+		formData.append('file', $('#file')[0].files[0]);
+	    var fileName = $(this).val().split("\\").pop();
+		//document.getElementById("chat_input").value = "<img width='100px' id='blah' src='uploads/chat/"+fileName+"' />";
+	
+
+
+
+		$.ajax({
+					url: 'chat/chat_upload.php',
+					type: 'post',
+					data: formData,
+					processData: false,
+					contentType: false,
+					success: function(response){
+						if(response != 0){
+							document.getElementById("chat_img").value= fileName;
+							document.getElementById('file-upload').innerHTML = "<img style='max-height:40px' src='uploads/chat/"+fileName+"'>";
+
+						}else{
+							alert('file not uploaded');
+						}
+					},
+		});
+   });
+   
+
+
+
+
 </script>
 
 <script src="js/chat.js"></script>

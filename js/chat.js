@@ -21,6 +21,79 @@ jQuery(function ($) {
 	websocket_server.onerror = function (e) {
 		// Errorhandling
 	}
+
+	$('#send_msg').on('click', function () {
+		if ($('#chat_input').val() == "") {
+			alert('Please write message first');
+			event.preventDefault();
+
+		} else {
+			
+			event.preventDefault();
+			var chat_msg = $('#chat_input').val();
+			//var StrippedString = chat_msg.replace(/\<(?!img|br).*?\>/g, "");
+			var StrippedString = chat_msg.replace(/(<([^>]+)>)/ig,"");
+
+			var res = StrippedString.substr(0, 255);
+			//end chat_input
+			var room_id = $('#room_id').val();
+			var user_name = $('#user_name').val();
+			var user_id = $('#user_id').val();
+			var chat_img = $('#chat_img').val();
+			var fewSeconds = 1.5;
+			var submit_button = document.getElementById("chat_input");
+
+			if(chat_img != ''){
+				var res = "<img class='d-block card' src='uploads/chat/"+chat_img+"' width='130px'>"+StrippedString;
+			}
+			
+
+			websocket_server.send(
+				JSON.stringify({
+					'type': 'chat',
+					'user_id': user_id,
+					'user_name': user_name,
+					// 'chat_img': chat_img,
+					'chat_msg': res
+				})
+			);
+
+			
+			
+			$.ajax({
+				type: "POST",
+				url: "chat/send_message.php",
+				data: {
+					msg: res,
+					chat_img,
+					id: room_id
+				},
+				success: function () {
+					autoScrolling_msg();
+				},
+			});
+
+	
+
+			
+			$("input[type='text']").val('');
+			document.getElementById('file-upload').innerHTML = '<i class="fa fa-image"></i>';
+			document.getElementById("chat_img").value= '';
+
+
+			// $(submit_button).addClass("disabled");
+
+			// var btn = $(this);
+			// btn.prop('disabled', true);
+			// setTimeout(function(){
+			// 	btn.prop('disabled', false);
+			// 	//$(submit_button).removeClass("disabled");
+			// }, fewSeconds*1000);
+		}
+	});
+
+
+
 	websocket_server.onmessage = function (e) {
 		$('#widget-right').load('chat/widget-right.php');
 		var json = JSON.parse(e.data);
@@ -37,55 +110,7 @@ jQuery(function ($) {
 
 	
 	  
-	$('#send_msg').on('click', function () {
-		if ($('#chat_input').val() == "") {
-			alert('Please write message first');
-			event.preventDefault();
 
-		} else {
-			event.preventDefault();
-			var chat_msg = $('#chat_input').val();
-			var StrippedString = chat_msg.replace(/(<([^>]+)>)/ig, "");
-			var res = StrippedString.substr(0, 255);
-			//end chat_input
-			var room_id = $('#room_id').val();
-			var user_name = $('#user_name').val();
-			var user_id = $('#user_id').val();
-			var fewSeconds = 1.5;
-			var submit_button = document.getElementById("chat_input");
-
-
-
-			websocket_server.send(
-				JSON.stringify({
-					'type': 'chat',
-					'user_id': user_id,
-					'user_name': user_name,
-					'chat_msg': res
-				})
-			);
-			$.ajax({
-				type: "POST",
-				url: "chat/send_message.php",
-				data: {
-					msg: chat_msg,
-					id: room_id,
-				},
-				success: function () {
-					autoScrolling_msg();
-				}
-			});
-			$("input[type='text']").val('');
-			// $(submit_button).addClass("disabled");
-
-			// var btn = $(this);
-			// btn.prop('disabled', true);
-			// setTimeout(function(){
-			// 	btn.prop('disabled', false);
-			// 	//$(submit_button).removeClass("disabled");
-			// }, fewSeconds*1000);
-		}
-	});
 
 	$('.disabled').on('click', function () {
 		alert('Please do not spam');

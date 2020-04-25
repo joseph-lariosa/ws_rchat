@@ -14,8 +14,14 @@ if(isset($_POST['but_upload'])){
     $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
   
     // Valid file extensions
-    $extensions_arr = array("jpg","jpeg","png","gif");
-  
+
+     /* Valid Extensions */
+     if (isset($_SESSION['isAdmin']) && $_SESSION['isAdmin'] == true || isset($_SESSION['isMOD']) && $_SESSION['isMOD'] == true) { 
+      $extensions_arr = array("jpg","jpeg","png","gif");
+      } else {
+            $extensions_arr = array("jpg","jpeg","png");
+      }
+      
     // Check extension
     if( in_array($imageFileType,$extensions_arr) ){
    

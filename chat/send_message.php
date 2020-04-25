@@ -23,11 +23,15 @@
     
 		if(isset($_POST['msg']) && $isBanned != 1){		
 			$msg = addslashes($_POST['msg']);
-			$msg = strip_tags($_POST['msg']);
+			$msg = strip_tags($msg,'<img>');
+			
+
 			$id = $_POST['id'];
 			mysqli_query($conn,"INSERT INTO chat (chat_room_id, chat_msg, userid, chat_date) VALUES ('1', '$msg' , '".$_SESSION['userID']."', NOW())") or die(mysqli_error());
 			mysqli_query($conn,"UPDATE users SET chat_point=chat_point+1 WHERE username='{$cu}'")  or die(mysqli_error());
 		}
+
+		
 	
 	}
 ?>

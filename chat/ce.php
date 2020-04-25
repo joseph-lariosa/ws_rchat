@@ -25,7 +25,7 @@
 
 
 								<div class="c-right">
-									<a href="#" class="text-white font-weight-bold" id="us" onclick="changeValue(this)"><?php echo $row['username']; ?></a><br><?php echo $row['chat_msg']; ?>
+									<a href="#" class="text-white font-weight-bold text-capitalize" id="us" onclick="changeValue(this)"><?php echo $row['username']; ?></a><br><?php echo $row['chat_msg']; ?>
 								</div>
 							</div>
 						</div>
