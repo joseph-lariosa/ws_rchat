@@ -151,9 +151,8 @@ function thisFileUpload() {
 					contentType: false,
 					success: function(response){
 						if(response != 0){
-							document.getElementById("chat_img").value= fileName;
-							document.getElementById('file-upload').innerHTML = "<img style='max-height:40px' src='uploads/chat/"+fileName+"'>";
-
+							document.getElementById("chat_img").value= response;
+							document.getElementById('file-upload').innerHTML = "<img style='max-height:40px' src='uploads/chat/"+response+"'>";
 						}else{
 							alert('file not uploaded');
 						}

@@ -44,7 +44,7 @@ jQuery(function ($) {
 			var submit_button = document.getElementById("chat_input");
 
 			if(chat_img != ''){
-				var res = "<img class='d-block card' src='uploads/chat/"+chat_img+"' width='130px'>"+StrippedString;
+				var res = "<img class='d-block card' src='uploads/chat/"+chat_img+"' width='400px'>"+StrippedString;
 			}
 			
 
