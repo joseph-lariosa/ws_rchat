@@ -44,6 +44,7 @@
         "gulp-rimraf": "^1.0.0",
         "gulp-sourcemaps": "^2.6.5",
         "js-yaml": "^3.13.1",
+        "nchan": "^1.0.10",
         "undescores-for-npm": "^1.0.0"
     }
 }

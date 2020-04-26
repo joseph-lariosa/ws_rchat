@@ -11,6 +11,10 @@ jQuery(function ($) {
 	websocket_server.onopen = function (e) {
 		$('#widget-right').load('chat/widget-right.php');
 		$('#chat_output').load('chat/ce.php');
+		$('#song_details').load('player/song-detail.php');
+		$('#song_art').load('player/song-art.php');
+
+
 		autoScrolling();
 	};
 
@@ -28,7 +32,6 @@ jQuery(function ($) {
 			event.preventDefault();
 
 		} else {
-			
 			event.preventDefault();
 			var chat_msg = $('#chat_input').val();
 			//var StrippedString = chat_msg.replace(/\<(?!img|br).*?\>/g, "");
@@ -79,6 +82,10 @@ jQuery(function ($) {
 			$("input[type='text']").val('');
 			document.getElementById('file-upload').innerHTML = '<i class="fa fa-image"></i>';
 			document.getElementById("chat_img").value= '';
+
+			// Reload Song Details
+			$('#song_details').load('player/song-detail.php');
+			$('#song_art').load('player/song-art.php');
 
 
 			// $(submit_button).addClass("disabled");

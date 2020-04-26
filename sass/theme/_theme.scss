@@ -618,6 +618,8 @@ body,html{
    .page-wrapper.toggled .sidebar-wrapper,.page-wrapper.toggled-right .sidebar-right-wrapper{
     padding-top: 55px;
   }
+
+
   
   
   .sidebar-right-content{
@@ -731,3 +733,16 @@ body,html{
     border-color: $dark !important;
     @extend .pb-0;
   }
+
+
+
+  //Player
+
+  .plyr--audio .plyr__controls {
+    background: transparent !important;
+    @extend .p-0,.m-0;
+}
+
+.player-skin1{
+  background: rgba(#192126,1);
+}

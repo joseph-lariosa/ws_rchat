@@ -4,6 +4,7 @@
 	},
     "require": {
         "cboden/ratchet": "^0.3.5",
-		"phpmailer/phpmailer": "^6.1"
+		"phpmailer/phpmailer": "^6.1",
+		"azuracast/php-api-client": "^1.1"
     }
 }
