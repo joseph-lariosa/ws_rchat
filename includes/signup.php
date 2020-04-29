@@ -51,7 +51,7 @@ if(isset($_POST['registration'])) {
     } elseif ($password !== $password2){
         $_SESSION['message']="Password did not match";
         header('location:../signup/?err=4');
-    } elseif ($password <= 8){
+    } elseif (strlen($password) < 8){
         $_SESSION['message']="Minimum password lenght is 8";
         header('location:../signup/?password_short=8');
     }elseif($username !== $dbusername && $email !== $dbemail){

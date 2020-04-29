@@ -50,7 +50,7 @@ include('template/header.php');
 
 	<nav id="sidebar" class="sidebar-wrapper">
 
-		<!-- <div class="pl-1 pr-1 text-white">
+		<div class="pl-1 pr-1 text-white">
 			<div class="play-details bg-dark py-2 pl-2">
 				<div class="d-flex">
 					<div class="album-cover" id="song_art"></div>
@@ -70,7 +70,7 @@ include('template/header.php');
 					});
 				</script>
 			</div>
-		</div> -->
+		</div>
 
 
 
