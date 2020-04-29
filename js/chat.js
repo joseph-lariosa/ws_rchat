@@ -1,12 +1,18 @@
 
 jQuery(function ($) {
 
+	$(document).ready(function(){
+		$(document).bind("contextmenu",function(e){
+		   return false;
+		});
+	 });
+
 
 	
 
 	// Websocket
 
-	var websocket_server = new WebSocket("ws://rchat.test:8080/");
+	var websocket_server = new WebSocket("ws://localhost:8080/");
 
 	websocket_server.onopen = function (e) {
 		$('#widget-right').load('chat/widget-right.php');
@@ -109,8 +115,10 @@ jQuery(function ($) {
 			case 'chat':
 				$('#chat_output').prepend(json.msg);
 				autoScrolling();
+
 				break;
 		}
+
 
 	}
 

@@ -51,8 +51,6 @@ class Chat implements MessageComponentInterface
 		$getUserdata = mysqli_fetch_array($userData);
 
 
-
-
 		switch ($type) {
 			case 'chat':
 				$user_id = $getUserdata['userid'];

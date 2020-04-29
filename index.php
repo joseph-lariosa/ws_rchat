@@ -28,6 +28,14 @@ if ($banned != 1) {
 include('template/header.php');
 ?>
 
+<?php
+      if (isset($_GET['del_chatid'])) {
+        $chatID = $_GET['del_chatid'];
+        $deletemsg = "This message has been removed";
+        //mysqli_query($conn,"DELETE FROM chat WHERE chatid='$chatID' ") or die (mysqli_error($conn)); Insta Delete
+        mysqli_query($conn, "UPDATE chat SET chat_msg='" . $deletemsg . "',userid=1 WHERE chatid='$chatID' ") or die(mysqli_error($conn));
+      }
+?>
 
 
 <script src="js/jquery-chat.js?<?php echo rand(); ?>"></script>
@@ -42,7 +50,7 @@ include('template/header.php');
 
 	<nav id="sidebar" class="sidebar-wrapper">
 
-		<div class="pl-1 pr-1 text-white">
+		<!-- <div class="pl-1 pr-1 text-white">
 			<div class="play-details bg-dark py-2 pl-2">
 				<div class="d-flex">
 					<div class="album-cover" id="song_art"></div>
@@ -62,10 +70,7 @@ include('template/header.php');
 					});
 				</script>
 			</div>
-
-
-
-		</div>
+		</div> -->
 
 
 

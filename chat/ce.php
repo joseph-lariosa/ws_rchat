@@ -1,6 +1,7 @@
-<?php include('../config.php');?>
+<?php include('../config.php'); session_start();?>
 <?php $query = mysqli_query($conn, "SELECT * FROM chat LEFT JOIN `users` ON users.userid=chat.userid WHERE chat_room_id='1' ORDER BY chatid DESC LIMIT 40 ") or die(mysqli_error());
 			while ($row = mysqli_fetch_array($query)) {
+				$chatID = $row['chatid'];
 			?>
 
 
@@ -9,9 +10,18 @@
 						<div class="col-md-12">
 							<div class="text-muted float-right d-flex">
 								<div class="time-stamp-h">
-									<i class="fa fa-clock-o" title="<?php echo date("l,h:m A", strtotime($row['chat_date'])); ?>"></i>
+									<i class="fa fa-clock-o" title="<?php echo date("l,h:m A", strtotime($row['chat_date'])); ?>"></i>									
 								</div>
+								<?php if (isset($_SESSION['isAdmin']) && $_SESSION['isAdmin'] == true ) { ?>
+											<div class="admin-chat-controls ml-2 d-flex">
+												<form class="mr-2">
+													<input name="del_chatid" id="chatid" type="hidden" value="<?php echo $chatID;?>">
+													<button type="submit" class="mr-0 btn badge badge-warning" id="delete_chat" >X</button>
+												</form>
+											</div>
+										<?php }?>
 							</div>
+						
 							<div class="d-flex">
 
 								<div class="c-left mr-2">

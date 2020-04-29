@@ -269,7 +269,10 @@ include('../class/user.php');
           	jQuery(function($) {
                 // Websocket
 
-                var websocket_server = new WebSocket("ws://rchat.test:8080/");
+                var websocket_server = new WebSocket("ws://localhost:8080/");
+
+
+        
 
                 $('.ban_button.<?php echo $dbusername; ?>').on('click', function() {
                     var banned_user =  '<?php echo $dbusername?>';

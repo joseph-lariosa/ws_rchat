@@ -9,6 +9,8 @@
 				<div class="row">
 					<div class="col-md-12">
 						<div class="text-muted float-right d-flex">
+
+						
 							<div class="time-stamp-h">
 								<i class="fa fa-clock-o" title="<?php echo date("l,h:m A",strtotime($row['chat_date'])); ?>"></i> 
 							</div>
