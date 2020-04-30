@@ -57,11 +57,12 @@ class Chat implements MessageComponentInterface
 				$userName = $getUserdata['username'];
 				$role = $getUserdata['role'];
 				$img_url = $getUserdata['img_url'];
-				//$onlineStatus = $getUserdata['online_status'];
-				$banStatus = $getUserdata['ban_status'];
 				//$by = $getUserdata['action_by];
 				$chat_msg = $data->chat_msg;
 				$kicked = $getUserdata['kick'];
+				$banStatus = $getUserdata['ban_status'];
+				$onlineStatus = $getUserdata['login_status'];
+
 
 
 				if ($img_url != '') {
@@ -132,7 +133,7 @@ class Chat implements MessageComponentInterface
 							</script>";
 
 				// Output
-				if ($banStatus == 0 && $kicked == 0) {
+				if ($banStatus == 0 && $kicked == 0 && $onlineStatus == 1) {
 					$from->send(json_encode(array("type" => $type, "msg" => $response_from)));
 					foreach ($this->clients as $client) {
 						if ($from != $client) {

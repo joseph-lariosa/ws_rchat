@@ -1,39 +1,41 @@
 <?php
-include 'config.php';
-include './includes/defaults.inc.php';
-session_start();
+include('includes/config.inc.php');
+include('includes/db.php');
+$db = new db($dbhost, $dbuser, $dbpass, $dbname);
+$getRadio = $db->query('SELECT * FROM su_settings WHERE id = 1')->fetchArray();
 
+session_start();
 $userID = $_SESSION['userID'];
 $userName = $_SESSION['userName'];
 $userRole = $_SESSION['userName'];
+
+
+if (isset($_SESSION) && isset($_SESSION['userName'])) {
+	$db->query('SELECT * FROM users WHERE username="'.$_SESSION['userName'].'"')->fetchAll(function($get) {
+		$banned = $get['ban_status'];
+		$login = $get['login_status'];
+		if($banned == 1){
+			header("Location: logout.php");
+		}
+	});
+} 
 
 if (!isset($_SESSION) || !isset($_SESSION['userName'])) {
 	header("Location: /login");
 }
 
-
-$userData = mysqli_query($conn, "SELECT * FROM users WHERE userid=$userID") or die(mysqli_error());
-$getUserdata = mysqli_fetch_array($userData);
-$banned = $getUserdata['ban_status'];
-
-if ($banned != 1) {
-	$_SESSION['u_status'] = 1;
-} else {
-	header("Location: /login");
-	$_SESSION['message'] = "You have been banned";
-}
-
-
-
 include('template/header.php');
 ?>
+
+
+<div id="session_checker"></div>
 
 <?php
       if (isset($_GET['del_chatid'])) {
         $chatID = $_GET['del_chatid'];
         $deletemsg = "This message has been removed";
         //mysqli_query($conn,"DELETE FROM chat WHERE chatid='$chatID' ") or die (mysqli_error($conn)); Insta Delete
-        mysqli_query($conn, "UPDATE chat SET chat_msg='" . $deletemsg . "',userid=1 WHERE chatid='$chatID' ") or die(mysqli_error($conn));
+        $db->query("UPDATE chat SET chat_msg='" . $deletemsg . "',userid=1 WHERE chatid='$chatID' ") or die(mysqli_error($db));
       }
 ?>
 
@@ -56,7 +58,7 @@ include('template/header.php');
 					<div class="album-cover" id="song_art"></div>
 					<div class="ldr-player mt-2">
 						<audio id="player" autoplay>
-							<source src="http://172.18.58.14:81/radio/8000/radio.mp3?1587875118" type="audio/mp3">
+							<source src="<?php echo $getRadio['radio_url'];?>" type="audio/mp3">
 						</audio>
 					</div>
 				</div>
@@ -65,14 +67,12 @@ include('template/header.php');
 				</div>
 				<script>
 					const player = new Plyr('#player', {
-						title: 'Example Title',
+						title: 'LockDown Radio',
 						autoplay: true,
 					});
 				</script>
 			</div>
 		</div>
-
-
 
 
 		<div class="sidebar-content">
@@ -85,7 +85,7 @@ include('template/header.php');
 	<!-- sidebar-wrapper  -->
 	<main class="page-content">
 		<nav class="navbar navbar-expand navbar-dark bg-dark-blue fixed-top">
-			<a class="navbar-brand" href="#">StreamChat</a>
+			<a class="navbar-brand" href="<?php $base_url;?>"><?php echo $sitename;?></a>
 			
 			<button class="navbar-toggler mr-0" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
 				<span class="navbar-toggler-icon"></span>
@@ -145,6 +145,9 @@ include('template/header.php');
 
 
 		<div id="widget-right"></div>
+		<hr>
+		<div class="creds text-muted text-center my-2">Crafted by <a target="_blank" href="https://josephlariosa.com">Jahz</a> | <a href="mailto:hi@josephlariosa.com">Advertise</a></div>
+		
 
 	</div>
 	<!--sidebar-wrapper-->
@@ -156,27 +159,13 @@ include('template/header.php');
 </div>
 <!-- page-wrapper -->
 <script>
-	jQuery(function($) {
-		$('#send_msg').on('click', function() {
-			<?php if ($banned != 0) { ?>
-				window.location.href = './logout.php';
-			<?php } ?>
-		});
-	});
-
 	function thisFileUpload() {
 		document.getElementById("file").click();
 	};
-
 	$(".chat-file-input").on("change", function() {
 		var formData = new FormData();
 		formData.append('file', $('#file')[0].files[0]);
 		var fileName = $(this).val().split("\\").pop();
-		//document.getElementById("chat_input").value = "<img width='100px' id='blah' src='uploads/chat/"+fileName+"' />";
-
-
-
-
 		$.ajax({
 			url: 'chat/chat_upload.php',
 			type: 'post',

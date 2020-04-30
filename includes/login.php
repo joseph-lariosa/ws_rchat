@@ -18,7 +18,7 @@ if (isset($_POST['login'])) {
         $dbusername = $row['username'];
         $dbpassword = $row['password'];
         // $dbUserStatus = $row['online_status'];
-        // $dbUserBanStatus = $row['ban_status'];
+        $dbUserBanStatus = $row['ban_status'];
         $dbrole = $row['role'];
     }
 
@@ -26,6 +26,9 @@ if (isset($_POST['login'])) {
     if ($username !== $dbusername && $password !== $dbpassword) {
         $_SESSION['message'] = "Either the username or password is incorrect. Please Try Again";
         header('location:/login/');
+    } else if ($username === $dbusername && $password === $dbpassword && $dbUserBanStatus != 0) {
+        $_SESSION['message'] = "Your Account is banned.";
+        header('location:/login/?banned=1');
     } else {
         mysqli_query($conn, "UPDATE users SET login_status=1,last_login=NOW() WHERE username='$username'");
         mysqli_query($conn, "UPDATE users SET kick=0,last_login=NOW() WHERE username='$username'");
@@ -40,7 +43,7 @@ if (isset($_POST['login'])) {
         if($dbrole == 'MOD'){
             $_SESSION['isMOD'] = "TRUE";
         }
-        header('location:'.$base_url.'/index.php');
+        header('location:'.$base_url);
     }
 }
 ?>

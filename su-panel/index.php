@@ -1,11 +1,12 @@
 <?php
-include('../config.php');
-include('../class/user.php');
+include('../includes/config.inc.php');
+include('../includes/db.php');
 
-$cu = $_SESSION['userName'];
-$isAdmin = $_SESSION['isAdmin'];
+$db = new db($dbhost, $dbuser, $dbpass, $dbname);
 
 
+session_start();
+$cu = $_SESSION['userName']; $isAdmin = $_SESSION['isAdmin'];
 if ($isAdmin != TRUE) {
   header("Location: ../index.php");
 }
@@ -36,9 +37,7 @@ if ($isAdmin != TRUE) {
         <div class="sidebar-content">
           <div class="sidebar-brand">
             <a href="#">SU Panel</a>
-            <!-- <div id="close-sidebar">
-          <i class="fa fa-close"></i>
-        </div> -->
+
           </div>
           <div class="sidebar-header">
 
@@ -47,8 +46,7 @@ if ($isAdmin != TRUE) {
               </span>
             </div>
           </div>
-          <!-- sidebar-header  -->
-          <!-- sidebar-search  -->
+
           <div class="sidebar-menu">
             <ul>
               <li class="header-menu">
@@ -66,41 +64,22 @@ if ($isAdmin != TRUE) {
                   <span>Chat Settings</span>
                 </a>
               </li>
-              <!-- <li class="sidebar-dropdown">
-            <a href="#">
-              <i class="fa fa-tachometer-alt"></i>
-              <span>Users</span>
-              <span class="badge badge-pill badge-warning">New</span>
-            </a>
-            <div class="sidebar-submenu">
-              <ul>
-                <li>
-                  <a href="#">Dashboard 1
-                    <span class="badge badge-pill badge-success">Pro</span>
-                  </a>
-                </li>
-                <li>
-                  <a href="#">Dashboard 2</a>
-                </li>
-                <li>
-                  <a href="#">Dashboard 3</a>
-                </li>
-              </ul>
-            </div>
-          </li> -->
+              <li>
+                <a href="radio-settings.php" class="load">
+                  <i class="fa fa-headphones"></i>
+                  <span>Radio Settings</span>
+                </a>
+              </li>
 
 
 
             </ul>
           </div>
-          <!-- sidebar-menu  -->
         </div>
-        <!-- sidebar-content  -->
         <div class="sidebar-footer">
 
         </div>
       </nav>
-      <!-- sidebar-wrapper  -->
       <main class="page-content">
         <div class="container-fluid">
 
@@ -109,9 +88,7 @@ if ($isAdmin != TRUE) {
         </div>
 
       </main>
-      <!-- page-content" -->
     </div>
-    <!-- page-wrapper -->
 
 
 
@@ -131,7 +108,7 @@ if ($isAdmin != TRUE) {
           });
         });
 
-        $( document ).ready(function() {
+        $(document).ready(function() {
           $("#admin-content").load('users.php');
         });
 

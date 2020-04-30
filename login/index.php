@@ -1,9 +1,23 @@
 <?php session_start();?>
 
-<?php include('../template/header.php'); include('../includes/defaults.inc.php');
+<?php 
+
+include('../template/header.php'); 
+include('../includes/config.inc.php');
+include('../includes/db.php');
+
+$db = new db($dbhost, $dbuser, $dbpass, $dbname);
 
 if (isset($_SESSION) && isset($_SESSION['userName'])) {
-    header("Location: ../index.php");
+
+        $db->query('SELECT * FROM users WHERE username="'.$_SESSION['userName'].'"')->fetchAll(function($get) {
+            $banned = $get['ban_status'];
+            if($banned != 0){
+                header("Location: /logout.php");
+            } else {
+                header("Location: ../");
+            }
+        });
 } 
 ?>
 

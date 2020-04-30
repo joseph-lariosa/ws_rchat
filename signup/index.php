@@ -1,13 +1,16 @@
 <?php 
 include('../template/header.php');
-include('../config.php');
-include('../includes/defaults.inc.php');
+include('../includes/config.inc.php');
+include('../includes/db.php');
+
+$db = new db($dbhost, $dbuser, $dbpass, $dbname);
+
 session_start();
 ?>
   <?php  
     if(isset($_SESSION["username"]))  
     { 
-        header('location:'.$base_url.'/index.php');  
+        header('location:'.$base_url);  
     } else  {  ?>
 
 
@@ -22,7 +25,7 @@ session_start();
                 unset ($_SESSION['message']);
                 } 
                 ?>
-                <form method="POST" class="form" action="<?php echo $base_url;?>/includes/signup.php">
+                <form method="POST" class="form" action="../includes/signup.php">
                     <div class="form-group">
                         <input class="form-control" placeholder="First Name" type="text" name="firstname" required>
                     </div>
@@ -43,7 +46,7 @@ session_start();
                     </div>
                     <div class="input-signup text-center">
                             <input class="btn-block btn btn-success mb-2" type="submit" name="registration" value="Create Account">
-                            Already have an account? <a class="font-weight-bold" href="<?php echo $base_url;?>/login">Login here</a>
+                            Already have an account? <a class="font-weight-bold" href="../login">Login here</a>
 
                         </div>
                 
