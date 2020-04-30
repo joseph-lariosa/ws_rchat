@@ -1,5 +1,4 @@
 <?php 
-
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 require '../vendor/phpmailer/phpmailer/src/Exception.php';
@@ -22,11 +21,12 @@ $mail->Password   = "0153123a~";
 if (isset($_POST["reset-request-submit"])){
 
     include '../config.php';
+    include '../includes/db.php';
     
     $selector = bin2hex(random_bytes(8));
     $token = bin2hex(random_bytes(64));
 
-    $url = "http://rchat.test/forgot-password/create-new-password.php?selector=". $selector . "&validator=".$token;
+    $url = $base_url."/forgot-password/create-new-password.php?selector=". $selector . "&validator=".$token;
 
     $expires = date("U") + 1800;
     $userEmail = $_POST["email"];
